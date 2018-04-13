@@ -1,8 +1,5 @@
 package model;
 
-import model.Item;
-
-/*-- vide Programa@{\it ~\ref{prog:interfaceitem}@ --*/
 public class ArvoreB {
 
     private static class Pagina {
@@ -19,6 +16,7 @@ public class ArvoreB {
     }
     private Pagina raiz;
     private int m, mm;
+    private static int contadorDeComps = 0;
 
     private void imprime(Pagina p, int nivel) {
         if (p != null) {
@@ -42,6 +40,8 @@ public class ArvoreB {
 
     private Item pesquisa(Item reg, Pagina ap) {
         if (ap == null) {
+            System.out.println("Comparações: " + contadorDeComps);
+            contadorDeComps = 0;
             return null; // Registro @{\it n\~ao}@ econtrado
         } else {
             int i = 0;
@@ -49,10 +49,14 @@ public class ArvoreB {
                 i++;
             }
             if (reg.compara(ap.r[i]) == 0) {
+                contadorDeComps++;
                 return ap.r[i];
             } else if (reg.compara(ap.r[i]) < 0) {
+                contadorDeComps++;
                 return pesquisa(reg, ap.p[i]);
             } else {
+                System.out.println("Comparações: " + contadorDeComps);
+                contadorDeComps = 0;
                 return pesquisa(reg, ap.p[i + 1]);
             }
         }
